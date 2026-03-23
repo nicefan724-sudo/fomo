@@ -15,7 +15,7 @@ const LoginPage = () => {
   useEffect(() => {
     // 如果已登录，重定向到首页
     if (isLoggedIn) {
-      Taro.redirectTo({ url: '/pages/home/index' });
+      Taro.switchTab({ url: '/pages/home/index' });
     }
   }, [isLoggedIn]);
 

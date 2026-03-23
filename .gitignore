@@ -31,6 +31,9 @@ frontend/dist/
 # Temp files
 frontend/build_output.txt
 frontend/find-reactdom.js
+frontend/build_out.txt
+frontend/build_dev.txt
+frontend/check-app.js
 
 .weapp/
 .alipay/

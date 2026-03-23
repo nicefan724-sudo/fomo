@@ -35,8 +35,8 @@ export const wechatLogin = async () => {
     const { token, user } = response.data;
     await useAuthStore.getState().setAuth(token, user);
 
-    // 5. 跳转到首页
-    await Taro.redirectTo({ url: '/pages/home/index' });
+    // 5. 跳转到首页（home 是 TabBar 页，必须用 switchTab）
+    await Taro.switchTab({ url: '/pages/home/index' });
 
     return { success: true, data: user };
   } catch (error) {

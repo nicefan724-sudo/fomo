@@ -63,7 +63,7 @@ export const useAuthStore = create((set, get) => ({
         isLoggedIn: false
       });
 
-      Taro.redirectTo({ url: '/pages/login/index' });
+      Taro.reLaunch({ url: '/pages/login/index' });
     } catch (error) {
       console.error('登出失败:', error);
     }

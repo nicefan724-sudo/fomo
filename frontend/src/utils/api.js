@@ -5,7 +5,8 @@
 
 import Taro from '@tarojs/taro';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
+// 开发时请在微信开发者工具「详情 → 本地设置」勾选「不校验合法域名」
+const BASE_URL = process.env.NODE_ENV === 'production'
   ? 'https://jomo-diary.com/api'
   : 'http://localhost:5000/api';
 
@@ -24,8 +25,8 @@ const request = async (method, path, data = null, params = null) => {
   const token = await getToken();
 
   const url = params
-    ? `${API_BASE_URL}${path}?${new URLSearchParams(params).toString()}`
-    : `${API_BASE_URL}${path}`;
+    ? `${BASE_URL}${path}?${new URLSearchParams(params).toString()}`
+    : `${BASE_URL}${path}`;
 
   const header = {
     'Content-Type': 'application/json',
@@ -40,9 +41,9 @@ const request = async (method, path, data = null, params = null) => {
       header,
       success: (res) => {
         if (res.statusCode === 401) {
-          // token 过期，跳转到登录页
+          // token 过期，清除并跳转到登录页
           Taro.removeStorage({ key: 'jomo_token' });
-          Taro.redirectTo({ url: '/pages/login/index' });
+          Taro.reLaunch({ url: '/pages/login/index' });
           reject(new Error('未授权，请重新登录'));
         } else if (res.statusCode >= 400) {
           reject(res.data);

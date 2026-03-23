@@ -1,12 +1,12 @@
 export default {
   pages: [
-    'pages/login/index',
     'pages/home/index',
-    'pages/diaryEdit/index',
-    'pages/diaryDetail/index',
     'pages/statistics/index',
     'pages/community/index',
-    'pages/mine/index'
+    'pages/mine/index',
+    'pages/login/index',
+    'pages/diaryEdit/index',
+    'pages/diaryDetail/index'
   ],
   tabBar: {
     color: '#999999',

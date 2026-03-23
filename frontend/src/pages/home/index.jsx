@@ -6,21 +6,31 @@ import React, { useState, useEffect } from 'react';
 import Taro from '@tarojs/taro';
 import { View, Text, ScrollView, Button } from '@tarojs/components';
 import apiClient from '../../utils/api';
-import { useDiaryStore } from '../../store';
+import { useDiaryStore, useAuthStore } from '../../store';
 import DiaryCard from '../../components/DiaryCard';
 import BottomTabBar from '../../components/BottomTabBar';
 import './index.scss';
 
 const HomePage = () => {
   const { diaries, total, setDiaries, removeDiary, setLoading, isLoading, selectedCategory, setCategory } = useDiaryStore();
+  const { isLoggedIn } = useAuthStore();
   
   const [currentPage, setCurrentPage] = useState(1);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  // 登录态守卫：未登录跳到登录页
+  useEffect(() => {
+    if (!isLoggedIn) {
+      Taro.reLaunch({ url: '/pages/login/index' });
+    }
+  }, [isLoggedIn]);
+
   // 初始化加载日记
   useEffect(() => {
-    loadDiaries(1);
-  }, [selectedCategory]);
+    if (isLoggedIn) {
+      loadDiaries(1);
+    }
+  }, [selectedCategory, isLoggedIn]);
 
   // 加载日记列表
   const loadDiaries = async (page = 1) => {
