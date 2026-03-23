@@ -1,0 +1,219 @@
+/**
+ * 日记编辑页面样式
+ */
+
+.diary-edit-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #faf9f7 100%);
+  padding-bottom: 30px;
+}
+
+.diary-form {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #e74c3c;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  &:focus {
+    border-color: #667eea;
+    outline: none;
+  }
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input-counter {
+  text-align: right;
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.error-msg {
+  display: block;
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+
+  &:active {
+    background: #f5f5f5;
+  }
+}
+
+.radio-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+}
+
+.radio-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.radio-desc {
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+}
+
+// 隐私选项特殊样式
+.privacy-group {
+  .radio-item {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+
+    &:active {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.05);
+    }
+  }
+}
+
+// 焦虑指数滑块
+.anxiety-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.anxiety-slider {
+  flex: 1;
+}
+
+.anxiety-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.anxiety-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.anxiety-label {
+  font-size: 12px;
+  color: #999;
+}
+
+.anxiety-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+  margin-top: 8px;
+}
+
+// 表单提示
+.form-hint {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+// 匿名选项
+.anonymous-option {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// 按钮
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-secondary {
+  background: white;
+  color: #667eea;
+  border: 1px solid #667eea;
+}
