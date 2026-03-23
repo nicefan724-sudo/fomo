@@ -4,10 +4,10 @@
   "private": true,
   "description": "JOMO日记 - 微信小程序前端",
   "scripts": {
-    "build:weapp": "taro build --type weapp",
-    "dev:weapp": "taro build --type weapp --watch",
-    "build:h5": "taro build --type h5",
-    "dev:h5": "taro build --type h5 --watch",
+    "build:weapp": "set NODE_OPTIONS=--openssl-legacy-provider && taro build --type weapp",
+    "dev:weapp": "set NODE_OPTIONS=--openssl-legacy-provider && taro build --type weapp --watch",
+    "build:h5": "set NODE_OPTIONS=--openssl-legacy-provider && taro build --type h5",
+    "dev:h5": "set NODE_OPTIONS=--openssl-legacy-provider && taro build --type h5 --watch",
     "test": "jest"
   },
   "browserslist": [
@@ -17,17 +17,20 @@
   ],
   "dependencies": {
     "@tarojs/components": "^3.6.0",
+    "@tarojs/react": "^3.6.39",
     "@tarojs/runtime": "^3.6.0",
     "@tarojs/taro": "^3.6.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "axios": "^1.4.0",
-    "zustand": "^4.3.0",
-    "tdesign-weapp": "^1.0.0"
+    "react-dom": "^18.3.1",
+    "tdesign-miniprogram": "^1.0.0",
+    "zustand": "^4.3.0"
   },
   "devDependencies": {
     "@tarojs/cli": "^3.6.0",
+    "@tarojs/mini-runner": "^3.6.39",
     "@tarojs/plugin-framework-react": "^3.6.0",
+    "@tarojs/plugin-platform-weapp": "^3.6.39",
+    "@tarojs/service": "^3.6.39",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.0",
     "babel-preset-taro": "^3.6.0",

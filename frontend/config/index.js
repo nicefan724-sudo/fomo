@@ -12,8 +12,14 @@ const config = {
   sourceRoot: 'src',
   outputRoot: 'dist',
   plugins: [
-    ['@tarojs/plugin-framework-react', {}]
+    '@tarojs/plugin-platform-weapp',
+    '@tarojs/plugin-framework-react'
   ],
+  framework: 'react',
+  compiler: 'webpack4',
+  alias: {
+    'react-dom$': path.resolve(__dirname, '../node_modules/react-dom')
+  },
   defineConstants: {},
   copy: {
     patterns: [],

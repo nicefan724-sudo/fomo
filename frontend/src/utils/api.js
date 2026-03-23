@@ -1,73 +1,68 @@
 /**
- * 前端API请求配置和HTTP客户端
+ * 前端API请求配置
+ * 使用 Taro.request 代替 axios（小程序环境不支持 axios）
  */
 
-import axios from 'axios';
 import Taro from '@tarojs/taro';
 
-// API基础URL
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://jomo-diary.com/api' 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'https://jomo-diary.com/api'
   : 'http://localhost:5000/api';
 
-// 创建axios实例
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json'
+// 获取本地存储的 token
+const getToken = async () => {
+  try {
+    const res = await Taro.getStorage({ key: 'jomo_token' });
+    return res.data || null;
+  } catch {
+    return null;
   }
-});
+};
 
-// 请求拦截器：添加认证token
-apiClient.interceptors.request.use(
-  async (config) => {
-    try {
-      const token = await Taro.getStorage({ key: 'jomo_token' })
-        .then(res => res.data)
-        .catch(() => null);
+// 统一请求方法
+const request = async (method, path, data = null, params = null) => {
+  const token = await getToken();
 
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    } catch (error) {
-      console.error('获取token失败:', error);
-    }
+  const url = params
+    ? `${API_BASE_URL}${path}?${new URLSearchParams(params).toString()}`
+    : `${API_BASE_URL}${path}`;
 
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  const header = {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  };
 
-// 响应拦截器：处理错误和token过期
-apiClient.interceptors.response.use(
-  (response) => {
-    return response.data;
-  },
-  async (error) => {
-    if (error.response?.status === 401) {
-      // Token过期，尝试刷新
-      try {
-        const response = await axios.post(`${API_BASE_URL}/auth/refresh-token`);
-        if (response.data.success) {
-          await Taro.setStorage({
-            key: 'jomo_token',
-            data: response.data.data.token
-          });
-          // 重试原请求
-          return apiClient(error.config);
+  return new Promise((resolve, reject) => {
+    Taro.request({
+      url,
+      method,
+      data,
+      header,
+      success: (res) => {
+        if (res.statusCode === 401) {
+          // token 过期，跳转到登录页
+          Taro.removeStorage({ key: 'jomo_token' });
+          Taro.redirectTo({ url: '/pages/login/index' });
+          reject(new Error('未授权，请重新登录'));
+        } else if (res.statusCode >= 400) {
+          reject(res.data);
+        } else {
+          resolve(res.data);
         }
-      } catch (refreshError) {
-        // 刷新失败，返回登录页
-        await Taro.setStorage({ key: 'jomo_token', data: '' });
-        Taro.redirectTo({ url: '/pages/login/index' });
+      },
+      fail: (err) => {
+        reject(err);
       }
-    }
+    });
+  });
+};
 
-    return Promise.reject(error);
-  }
-);
+// 封装常用方法
+const apiClient = {
+  get: (path, options = {}) => request('GET', path, null, options.params),
+  post: (path, data) => request('POST', path, data),
+  put: (path, data) => request('PUT', path, data),
+  delete: (path) => request('DELETE', path)
+};
 
 export default apiClient;

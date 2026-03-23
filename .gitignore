@@ -24,8 +24,14 @@ build/
 .env.local
 .env.*.local
 
-# Taro
-.rn_temp/
+# Taro build cache
+frontend/.swc/
+frontend/dist/
+
+# Temp files
+frontend/build_output.txt
+frontend/find-reactdom.js
+
 .weapp/
 .alipay/
 .swan/
